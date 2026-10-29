@@ -1,0 +1,232 @@
+% =====================================================================
+%  NOISE -- formulár VV-F: Vecný zámer projektu
+%  (záväzná osnova pre aplikovaný výskum a vývoj, max. 15 strán)
+%  Metódy inžinierskej práce 2026/27, predbežná verzia projektu
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[provide=*,slovak]{babel}
+\usepackage{mathptmx}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usepackage{array,tabularx,booktabs}
+\usepackage[table]{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{hlavicka}{RGB}{220,230,241}
+\newcommand{\doplnit}[1]{\textcolor{red}{[#1]}}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{10pt}{3pt}
+\setlength{\parindent}{0pt}
+\setlength{\emergencystretch}{2em}
+\setlength{\parskip}{5pt}
+\setlist{itemsep=1pt,topsep=2pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\small VV-F -- Vecný zámer projektu}
+\rhead{\small NOISE}
+\cfoot{\small \thepage}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries VV-F -- VECNÝ ZÁMER PROJEKTU}\\[3pt]
+{\small Záväzná osnova pre aplikovaný výskum a~vývoj (rozsah max. 15 strán)}
+\end{center}
+
+\begin{tabularx}{\textwidth}{|p{4.2cm}|L|}
+\hline
+\rowcolor{hlavicka}\textbf{Názov projektu} & Nevizuálna detekcia obsadenosti uzavretých priestorov s~dôrazom na ochranu súkromia a~odolnosť v~kritických podmienkach (NOISE) \\ \hline
+\textbf{Zodpovedný riešiteľ} & Oliver Pribula \\ \hline
+\textbf{Žiadateľ} & Slovenská technická univerzita v~Bratislave, Fakulta informatiky a~informačných technológií \\ \hline
+\textbf{Štatutárny zástupca} & \doplnit{meno a~funkcia} \\ \hline
+\end{tabularx}
+
+% =====================================================================
+\section{Excelentnosť}
+
+\subsection*{1.1 Projektový zámer, navrhovaný spôsob riešenia a~aplikačná úroveň výsledkov}
+
+Informácia o~tom, koľko ľudí sa práve nachádza v~miestnosti, má praktickú hodnotu v~bežnej prevádzke aj v~kríze. Správca budovy podľa nej riadi vykurovanie, vetranie a~osvetlenie, zákazník fitness centra či knižnice podľa nej zistí, či je voľné miesto, a~veliteľ hasičského zásahu podľa nej rozhoduje, kam poslať záchranárov. Dnes sa obsadenosť zisťuje najmä kamerami alebo systémami, ktoré vyžadujú aktívnu spoluprácu ľudí (turnikety, registrácia, mobilné aplikácie). Kamery zaznamenávajú identitu osôb, preto ich nemožno inštalovať do mnohých priestorov, a~v~tme alebo v~dyme sú nepoužiteľné. Systémy založené na spolupráci poskytujú neúplné údaje, lebo ich ľudia nepoužívajú dôsledne.
+
+Zámerom projektu NOISE je senzorický modul, ktorý počet osôb odhaduje výlučne z~\emph{nevizuálnych} signálov. Modul kombinuje tri fyzikálne odlišné zdroje informácie:
+\begin{itemize}
+\item \textbf{rádiofrekvenčné snímanie} -- zmeny kanálovej informácie Wi-Fi (Channel State Information, CSI) a~odrazy radaru v~pásme 60~GHz, ktoré zachytávajú pohyb aj mikropohyby (dýchanie) a~prenikajú dymom;
+\item \textbf{nízkorozlíšené termálne pole} (8$\times$8 až 32$\times$24 pixelov), ktoré zachytí tepelnú stopu osoby bez rozlíšenia tváre;
+\item \textbf{aktívne akustické snímanie} v~nepočuteľnom pásme ako doplnkový kanál, ktorého prínos sa overí v~prvej etape.
+\end{itemize}
+
+Signály sa spracujú priamo v~zariadení na lacnom mikrokontroléri. Zariadenie neukladá ani neodosiela surové dáta, von posiela iba počet osôb s~intervalom spoľahlivosti. Modul má dva režimy: \emph{štandardný} (nízka spotreba, napájanie cez PoE, priebežné hlásenie obsadenosti) a~\emph{havarijný} (aktivuje sa pri detekcii požiaru alebo výpadku napájania, beží na záložnej batérii LiFePO4 a~uprednostňuje spoľahlivú detekciu aj nehybných osôb pred presným počtom).
+
+Aplikačná úroveň: projekt začína na úrovni TRL~2 a~končí funkčným vzorom overeným v~relevantnom prostredí (TRL~6) -- v~komerčnom priestore a~v~cvičnom objekte Hasičského a~záchranného zboru.
+
+\subsection*{1.2 Aktuálnosť cieľov a~originalita myšlienky a~riešenia}
+
+\textbf{Aktuálnosť.} Tlak na úspory energie v~budovách zvyšuje dopyt po presných údajoch o~obsadenosti, keďže vetranie a~klimatizácia sa dajú riadiť podľa skutočného počtu osôb. Súčasne nariadenie GDPR obmedzuje nasadzovanie kamier v~priestoroch, kde ľudia oprávnene očakávajú súkromie. Nevizuálne snímanie sa preto v~posledných rokoch intenzívne skúma, ale prevažne v~laboratórnych podmienkach a~vždy pre jednu modalitu.
+
+\textbf{Originalita myšlienky.} Projekt rieši naraz dva problémy, ktoré sa v~literatúre riešia oddelene: ochranu súkromia v~bežnej prevádzke a~odolnosť v~krízových podmienkach. Spoločným menovateľom je, že oba vylučujú optické snímanie a~oba vyžadujú, aby zariadenie fungovalo autonómne.
+
+\textbf{Originalita riešenia.} Jadrom je \emph{adaptívna fúzia}, ktorá priebežne odhaduje dôveryhodnosť každej modality podľa stavu prostredia. Ak termálne pole stráca kontrast (teplota okolia sa blíži k~teplote ľudského tela), váha sa presúva na rádiofrekvenčnú vetvu; ak je Wi-Fi kanál zarušený, rozhoduje radar. Druhým prvkom je architektúra \emph{privacy-by-design}: ochrana súkromia nevyplýva len z~toho, že senzor nemá kameru (aj rádiové signály totiž obsahujú biometrické vzory, napr. chôdzu), ale z~toho, že surové dáta nikdy neopustia zariadenie.
+
+\subsection*{1.3 Stav poznania, vedecké základy a~predchádzajúce výsledky}
+
+Podrobný prehľad stavu poznania je obsahom sprievodného prehľadového článku. Zhrnutie:
+\begin{itemize}
+\item \textbf{Environmentálne senzory} (CO\textsubscript{2}, PIR) sú lacné a~anonymné, ale CO\textsubscript{2} reaguje s~oneskorením desiatok minút a~PIR nezachytí nehybnú osobu; na presný počet nestačia.
+\item \textbf{Nízkorozlíšené termálne polia} umožňujú počítať osoby pri zachovaní anonymity a~bežia aj na mikrokontroléroch. Pri vysokej okolitej teplote a~pri požiari však strácajú kontrast medzi človekom a~pozadím.
+\item \textbf{Wi-Fi snímanie} využíva zmeny šírenia signálu spôsobené ľuďmi; už z~intenzity prijímaného signálu sa dá odhadnúť počet osôb a~kanálová informácia (CSI) poskytuje jemnejšie údaje. Hlavným problémom je citlivosť na zmeny prostredia a~slabá prenositeľnosť modelov medzi miestnosťami.
+\item \textbf{Radary v~pásme mmWave} merajú vzdialenosť, rýchlosť a~mikropohyby, dokážu zachytiť dýchanie a~sledovať viac osôb. Tie isté vlastnosti však umožňujú aj identifikáciu osôb podľa chôdze, preto si vyžadujú ochranu na úrovni architektúry.
+\item \textbf{Výpočet na hrane:} rámce typu TensorFlow Lite Micro umožňujú nasadiť kvantizované neurónové siete na mikrokontroléry s~desiatkami až stovkami kB pamäte.
+\end{itemize}
+Chýba systém, ktorý tieto komplementárne princípy spojí do jednej autonómnej jednotky, dynamicky reaguje na degradáciu jednotlivých senzorov a~je overený aj v~dyme.
+
+\textbf{Predchádzajúce výsledky tímu.} Riešiteľský kolektív v~rámci predmetu Metódy inžinierskej práce spracoval analýzu nevizuálnych modalít, kvalitatívne porovnanie technológií a~koncept zariadenia (prezentovaný 19.~10.~2026). \doplnit{doplniť prípadné vlastné experimenty, napr. prvé merania CSI na ESP32}
+
+\subsection*{1.4 Ciele projektu a~reálnosť ich dosiahnutia}
+
+\textbf{Hlavný cieľ:} vyvinúť a~v~pilotných podmienkach overiť autonómny modul nevizuálnej detekcie a~počítania osôb, z~ktorého neodchádzajú žiadne surové dáta a~ktorý zostáva funkčný v~tme, v~dyme a~pri výpadku napájania.
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|p{1cm}|L|p{5.4cm}|}
+\hline
+\rowcolor{hlavicka}\textbf{Cieľ} & \textbf{Opis} & \textbf{Merateľný ukazovateľ} \\ \hline
+C1 & Analýza a~výber modalít, metodika rozmiestnenia senzorov & porovnanie min. 5 modalít v~4 kritériách; technická správa (M8) \\ \hline
+C2 & Adaptívna fúzia RF a~termálnych dát & chyba $\leq \pm 1$ osoba v~$\geq 90$\,\% meraní, MAE $\leq 0{,}5$ osoby (miestnosti do 15 osôb) \\ \hline
+C3 & Inferencia na mikrokontroléri & SRAM $\leq 512$~kB, latencia $\leq 1$~s, príkon $\leq 3$~W \\ \hline
+C4 & Havarijný režim & detekcia nehybnej osoby v~dyme do 30~s s~úspešnosťou $\geq 95$\,\%; výdrž na batérii $\geq 2$~h \\ \hline
+C5 & Adaptácia na novú miestnosť & kalibrácia do 15 minút bez ručného označovania dát, pokles presnosti $\leq 5$ p.\,b. \\ \hline
+C6 & Pilotné overenie & 2 pilotné prostredia, TRL~6 (M34) \\ \hline
+\end{tabularx}
+\end{center}
+
+\textbf{Reálnosť.} Každá z~modalít bola v~literatúre samostatne overená na úlohe detekcie alebo počítania osôb a~potrebný hardvér je komerčne dostupný za nízku cenu. Riziko projektu nespočíva v~tom, či jednotlivé princípy fungujú, ale v~ich spoľahlivej kombinácii v~reálnych podmienkach; preto je cieľ C2 stanovený pre miestnosti do 15 osôb, kde sa signály od osôb ešte dajú rozlíšiť. Pre väčšie priestory sa počíta so sieťou viacerých modulov.
+
+\subsection*{1.5 Metodológia riešenia a~jej opodstatnenosť}
+
+\textbf{Senzorická platforma.} Mikrokontrolér ESP32-S3 zbiera kanálovú informáciu Wi-Fi (amplitúdy a~fázy na podnosných frekvenciách) a~riadi FMCW radar v~pásme 60~GHz a~termálne pole. Napájanie zabezpečuje PoE, záložnú energiu batéria LiFePO4, ktorá je oproti bežným Li-ion článkom tepelne stabilnejšia.
+
+\textbf{Algoritmický reťazec} má tri úrovne:
+\begin{enumerate}[label=\textbf{Ú\arabic*:},leftmargin=*]
+\item \emph{Prebudenie a~filtrácia} -- lacné deterministické metódy (adaptívne prahovanie termálneho obrazu, detekcia zmeny v~CSI) rozhodnú, či je v~miestnosti niekto prítomný; zložitejšie modely sa spúšťajú len pri zmene stavu.
+\item \emph{Extrakcia príznakov} -- Dopplerovské spektrum a~fázové rozdiely z~CSI, mapy vzdialenosti a~rýchlosti a~frekvencia mikropohybov z~radaru, počet a~dráhy tepelných škvŕn z~termálneho poľa.
+\item \emph{Adaptívna fúzia} -- každá vetva poskytne odhad počtu osôb a~jeho neistotu; výsledný odhad vznikne bayesovskou kombináciou, v~ktorej sa váhy menia podľa ukazovateľov kvality signálu (kontrast termálneho obrazu, stabilita CSI, pomer signálu k~šumu radaru). Časová konzistencia sa zabezpečí Kalmanovým filtrom.
+\end{enumerate}
+
+\textbf{Zber dát a~vyhodnotenie.} Referenčný počet osôb sa pri zbere dát určí nezávislou metódou (ručné značenie, počítanie pri vstupe), ktorá sa po vyhodnotení zlikviduje. Merania prebehnú v~učebni, študovni, kancelárii a~v~dymovej komore. Hodnotiť sa bude stredná absolútna chyba, podiel meraní s~chybou do $\pm 1$ osoby, presnosť a~úplnosť detekcie prítomnosti, latencia a~spotreba.
+
+\textbf{Opodstatnenosť.} Fúzia fyzikálne odlišných modalít je priamou odpoveďou na to, že každá z~nich zlyháva v~iných podmienkach. Výpočet na hrane je zvolený preto, lebo len tak sa dá ochrana súkromia zaručiť konštrukčne, a~nie iba sľubom prevádzkovateľa.
+
+\subsection*{1.6 Najdôležitejšie výstupy aplikačného výskumu zodpovedného riešiteľa}
+Zodpovedný riešiteľ je na začiatku výskumnej kariéry a~za posledných 5 rokov nemá publikované výstupy aplikačného výskumu. \doplnit{doplniť, ak existujú (súťaže, študentské projekty, open-source)}
+
+\subsection*{1.7 Najdôležitejšie projekty zodpovedného riešiteľa}
+Zodpovedný riešiteľ doteraz neviedol ani neriešil grantový projekt.
+
+\subsection*{1.8 Kvalita a~expertíza zodpovedného riešiteľa, vízia budovania tímu}
+Oliver Pribula zodpovedá za koordináciu a~celkovú architektúru systému. Víziou je vybudovať na FIIT STU skupinu zameranú na snímanie s~ochranou súkromia, ktorá bude dataset a~platformu NOISE využívať v~záverečných prácach a~v~ďalších projektoch. \doplnit{rozpracovať vo finálnej verzii}
+
+\subsection*{1.9 Kompetentnosť zúčastnených organizácií}
+FIIT STU sa venuje výskumu v~oblasti počítačových sietí, vstavaných systémov, internetu vecí a~strojového učenia a~disponuje laboratóriami s~vybavením na vývoj a~oživovanie vstavaných zariadení. \doplnit{doplniť konkrétne laboratóriá a~relevantné projekty fakulty}
+
+\subsection*{1.10 Expertíza jednotlivých riešiteľov}
+\begin{itemize}
+\item \textbf{Lukáš Poláček} -- rádiofrekvenčné snímanie: spracovanie Wi-Fi CSI a~radarových signálov, analýza mikropohybov.
+\item \textbf{Martin Pivko} -- vstavané systémy: návrh dosky plošných spojov a~napájania, integrácia senzorov, firmvér.
+\item \textbf{Daniil Romashov} -- strojové učenie: fúzne modely, kvantizácia a~optimalizácia modelov pre mikrokontroléry, vyhodnocovanie.
+\end{itemize}
+
+\subsection*{1.11 Zapojenie mladých pracovníkov výskumu a~vývoja}
+Všetci štyria riešitelia sú mladší ako 35 rokov, zapojenie mladých pracovníkov je teda 100\,\%. Každý zodpovedá za samostatnú časť systému, čo podporuje rast jeho expertízy; výsledky projektu sú plánované ako základ ich záverečných prác.
+
+% =====================================================================
+\section{Dopad}
+
+\subsection*{2.1 Prínosy na rozvoj poznania, aplikovaného výskumu a~inovácií}
+\begin{itemize}
+\item Nový algoritmus adaptívnej fúzie RF a~termálnych dát, ktorý sa prispôsobí degradácii jednotlivých modalít bez ručnej rekalibrácie.
+\item Otvorený anotovaný dataset kombinujúci Wi-Fi CSI, radarové a~termálne dáta v~bežných aj krízových podmienkach (dym); takýto dataset podľa našej rešerše zatiaľ neexistuje.
+\item Overenie, do akej miery možno ochranu súkromia nevizuálnych modalít zaručiť architektúrou zariadenia (test, či z~výstupu modulu nie je možné identifikovať osoby).
+\item Nový produkt: lacný nástenný modul pre počítanie osôb bez kamier.
+\end{itemize}
+
+\subsection*{2.2 Spôsob a~miera využiteľnosti výsledkov v~SR a~v~zahraničí}
+Modul je využiteľný všade, kde je potrebné poznať obsadenosť a~kamera je neprípustná alebo nefunkčná. V~SR ide o~správcov verejných budov (univerzity, úrady, knižnice), prevádzkovateľov služieb a~o~Hasičský a~záchranný zbor. Keďže GDPR platí v~celej EÚ, rovnaký problém riešia prevádzkovatelia vo všetkých členských štátoch, čo vytvára priestor na komerčné uplatnenie aj v~zahraničí. \doplnit{doplniť konkrétnych partnerov a~spôsob prenosu výsledkov (licencia, spin-off)}
+
+\subsection*{2.3 Miera ekonomického prínosu}
+\begin{itemize}
+\item \textbf{Úspora energie:} riadenie vetrania a~klimatizácie podľa skutočného počtu osôb namiesto pevného harmonogramu znižuje spotrebu energie. \doplnit{kvantifikovať s~oporou v~literatúre}
+\item \textbf{Kvalita služieb:} zákazníci sa vyhnú preplneným prevádzkam, prevádzkovatelia lepšie plánujú personál.
+\item \textbf{Ochrana života:} informácia o~počte a~polohe uviaznutých osôb skracuje prehľadávanie zadymeného objektu a~znižuje riziko pre záchranárov.
+\item \textbf{Nízka cena:} modul je postavený z~komerčne dostupných komponentov, čo umožňuje plošné nasadenie.
+\end{itemize}
+
+\subsection*{2.4 Opatrenia na maximalizáciu dopadu a~komunikácia výsledkov}
+\begin{itemize}
+\item 3--4 publikácie v~časopisoch indexovaných vo WoS/Scopus (napr. IEEE Internet of Things Journal, IEEE Sensors Journal, IEEE Access) a~príspevky na konferenciách (IEEE DCOSS, ACM BuildSys).
+\item Zverejnenie datasetu a~softvéru pod otvorenou licenciou.
+\item Ukážky pre verejnosť (Noc výskumníkov, Deň otvorených dverí FIIT) a~webová stránka projektu.
+\item Pracovné stretnutia s~HaZZ a~komerčnými prevádzkovateľmi pri pilotnom testovaní.
+\end{itemize}
+
+% =====================================================================
+\section{Implementácia}
+
+\subsection*{3.1 Projektový plán a~výstupy}
+
+Projekt trvá 36 mesiacov (01.07.2027 -- 30.06.2030) a~je rozdelený do štyroch pracovných balíkov.
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|p{0.9cm}|L|p{1.8cm}|p{2.2cm}|L|}
+\hline
+\rowcolor{hlavicka}\textbf{WP} & \textbf{Názov a~náplň} & \textbf{Obdobie} & \textbf{Vedúci} & \textbf{Výstupy} \\ \hline
+WP1 & Analýza požiadaviek a~modalít, hardvérový návrh, testovacie pracovisko & M1--M8 & M.~Pivko & technická správa, NOISE-HW-v1 \\ \hline
+WP2 & Zber dát, spracovanie signálov, vývoj fúznych algoritmov & M9--M20 & L.~Poláček & dataset, fúzny algoritmus, konferenčný príspevok \\ \hline
+WP3 & Optimalizácia Edge AI, implementácia na MCU, havarijný režim & M21--M30 & D.~Romashov & softvérový balík, článok \\ \hline
+WP4 & Pilotné overenie, šírenie výsledkov & M31--M36 & O.~Pribula & funkčný vzor TRL~6, články \\ \hline
+\end{tabularx}
+\end{center}
+
+\textbf{Míľniky:}
+\begin{itemize}
+\item \textbf{MS1 (M8):} hotový modulárny senzorický uzol NOISE-HW-v1 a~testovacie pracovisko.
+\item \textbf{MS2 (M16):} anotovaný multimodálny dataset sprístupnený odbornej komunite.
+\item \textbf{MS3 (M26):} fúzny algoritmus dosahuje cieľ C2 na referenčných dátach a~beží na mikrokontroléri.
+\item \textbf{MS4 (M34):} úspešná validácia prototypu v~pilotnom komerčnom a~hasičskom prostredí (TRL~6).
+\end{itemize}
+
+\subsection*{3.2 Projektový manažment}
+Zodpovedný riešiteľ koordinuje projekt a~komunikuje s~agentúrou a~partnermi. Tím sa stretáva raz za dva týždne, priebeh sleduje v~systéme na správu úloh a~spoločnom repozitári kódu a~dát. Na konci každého pracovného balíka prebehne interné hodnotenie plnenia merateľných ukazovateľov; pri nesplnení sa upraví plán nasledujúceho balíka. \doplnit{rozpracovať: rozhodovanie, správa dát, etické aspekty zberu dát}
+
+\subsection*{3.3 Riziká implementácie a~ich zmiernenie}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|L|p{1.7cm}|p{1.5cm}|L|}
+\hline
+\rowcolor{hlavicka}\textbf{Riziko} & \textbf{Pravdep.} & \textbf{Dopad} & \textbf{Zmiernenie} \\ \hline
+Saturácia termálneho poľa pri vysokej teplote alebo požiari & vysoká & kritický & fúzia zníži váhu termálnej vetvy a~rozhodovanie presunie na RF vetvu \\ \hline
+Zlyhanie Wi-Fi CSI pri silnom rádiovom rušení & stredná & stredný & radar ako nezávislá RF vetva, voľba menej vyťaženého kanála \\ \hline
+Nedostatok pamäte na mikrokontroléri & stredná & stredný & hierarchický reťazec: deterministický hrubý odhad, neurónová sieť len pri zložitých stavoch; kvantizácia na 8 bitov \\ \hline
+Nízka presnosť pri vyššom počte osôb & stredná & stredný & obmedzenie cieľa na miestnosti do 15 osôb, sieť viacerých modulov \\ \hline
+Nedostupnosť pilotného prostredia (dymová komora) & nízka & vysoký & včasná dohoda s~partnerom, náhradné testy s~umelým dymom v~laboratóriu \\ \hline
+Identifikovateľnosť osôb z~výstupu & nízka & vysoký & výstup obmedzený na počet a~neistotu; test reidentifikácie vo WP3 \\ \hline
+\end{tabularx}
+\end{center}
+
+\subsection*{3.4 Adekvátnosť rozpočtu}
+Celkový rozpočet je 244\,108 EUR. Najväčšiu časť tvoria osobné náklady štyroch riešiteľov (62\,\% vrátane odvodov), čo zodpovedá výskumnému charakteru projektu. Materiálové náklady (24\,000 EUR) sú sústredené do prvého roka, keď sa nakupuje hardvér na 10 senzorických uzlov; v~ďalších rokoch pokrývajú výrobu revízií dosiek a~krytov. Služby zahŕňajú prenájom dymovej komory a~publikačné poplatky. Podrobné členenie je vo formulári VV-C.
+
+\subsection*{3.5 Existujúca technická a~personálna infraštruktúra}
+\doplnit{opísať laboratóriá FIIT STU, dostupné meracie prístroje, výpočtovú infraštruktúru na trénovanie modelov a~prípadné vybavenie partnera (dymová komora)}
+
+\end{document}

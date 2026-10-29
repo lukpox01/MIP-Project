@@ -1,0 +1,298 @@
+% =====================================================================
+%  NOISE -- Žiadosť o poskytnutie prostriedkov na riešenie projektu
+%  aplikovaného výskumu a vývoja (APVV), časti VV-A až VV-E
+%  Metódy inžinierskej práce 2026/27, predbežná verzia projektu
+% =====================================================================
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[provide=*,slovak]{babel}
+\usepackage{mathptmx}
+\usepackage[scaled=.92]{helvet}
+\usepackage[a4paper,margin=2cm]{geometry}
+\usepackage{array,tabularx,longtable,booktabs,multirow}
+\usepackage[table]{xcolor}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\renewcommand{\familydefault}{\sfdefault}
+\setlength{\parindent}{0pt}
+\setlength{\emergencystretch}{2em}
+\setlength{\parskip}{4pt}
+\renewcommand{\arraystretch}{1.25}
+
+% farby a pomocné makrá formulára
+\definecolor{hlavicka}{RGB}{220,230,241}
+\definecolor{pole}{RGB}{245,245,245}
+\newcommand{\doplnit}[1]{\textcolor{red}{[#1]}}
+\newcommand{\cast}[1]{\vspace{8pt}{\large\bfseries #1}\par\vspace{2pt}}
+\newcommand{\podcast}[1]{\vspace{6pt}\rowcolors{1}{}{}{\bfseries #1}\par}
+\newcommand{\zaskrt}{$\boxtimes$}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{K}[1]{>{\columncolor{pole}\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\small Žiadosť APVV -- aplikovaný výskum a vývoj}
+\rhead{\small NOISE}
+\cfoot{\small \thepage}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries ŽIADOSŤ O POSKYTNUTIE PROSTRIEDKOV NA RIEŠENIE\\[2pt]
+PROJEKTU APLIKOVANÉHO VÝSKUMU A VÝVOJA}\\[6pt]
+{\large Všeobecná výzva -- formuláre VV-A až VV-E}\\[4pt]
+{\small predbežná verzia, Metódy inžinierskej práce 2026/27, FIIT STU}
+\end{center}
+
+% =====================================================================
+\cast{VV-A1 -- Základné údaje o projekte}
+
+\begin{tabularx}{\textwidth}{|p{0.6cm}|p{4.6cm}|L|}
+\hline
+\rowcolor{hlavicka} & \textbf{Položka} & \textbf{Údaj} \\ \hline
+01 & Evidenčné číslo projektu & \textit{pridelí APVV} \\ \hline
+02 & Dátum podania & \doplnit{dátum podania} \\ \hline
+03 & Názov projektu (SK) & Nevizuálna detekcia obsadenosti uzavretých priestorov s~dôrazom na ochranu súkromia a~odolnosť v~kritických podmienkach \\ \hline
+   & Názov projektu (EN) & Non-Visual Privacy-Preserving Occupancy Detection in Enclosed Spaces with High Environmental Resilience \\ \hline
+04 & Akronym projektu & NOISE \\ \hline
+05 & Špecializácia VaV (SK FORD) & 2.02 Elektrotechnika, automatizácia a~riadiace systémy; 2.03 Telekomunikácie a~počítačové inžinierstvo \\ \hline
+06 & Charakteristika VaV & aplikovaný výskum a~experimentálny vývoj \\ \hline
+07 & Začiatok riešenia & 01.07.2027 \\ \hline
+08 & Koniec riešenia & 30.06.2030 (36 mesiacov) \\ \hline
+09 & Anotácia & pozri nižšie \\ \hline
+10 & Žiadateľ (koordinujúca organizácia) & Slovenská technická univerzita v~Bratislave, Fakulta informatiky a~informačných technológií \\ \hline
+11 & Požadované prostriedky od APVV & 244\,108 EUR \\ \hline
+12 & Spolufinancovanie z~iných zdrojov & 0 EUR \\ \hline
+13 & Celkové náklady projektu & 244\,108 EUR \\ \hline
+\end{tabularx}
+
+\medskip
+\textbf{VV-A1-09 Anotácia projektu} (max. 2\,000 znakov)
+
+\fcolorbox{black}{pole}{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule}{\small
+Projekt NOISE rieši problém zisťovania prítomnosti a~počtu osôb v~uzavretých priestoroch bez kamier. Kamerové systémy zasahujú do súkromia, čo ich vylučuje z~kancelárií, šatní, ubytovacích či zdravotníckych priestorov, a~v~tme alebo v~dyme prestávajú fungovať. Riešenia, ktoré vyžadujú spoluprácu ľudí (registrácia pri vstupe, mobilná aplikácia), poskytujú nepresné údaje. V~krízovej situácii, napríklad pri požiari, tak záchranári často nevedia, koľko osôb zostalo vo vnútri. Cieľom projektu je navrhnúť, vyvinúť a~v~pilotných podmienkach overiť nástenný senzorický modul, ktorý odhaduje počet osôb výlučne z~nevizuálnych signálov. Modul kombinuje rádiofrekvenčné snímanie (Wi-Fi Channel State Information a~radar v~pásme 60~GHz) s~nízkorozlíšeným termálnym poľom a~adaptívne váži dôveryhodnosť jednotlivých zdrojov podľa stavu prostredia. Celé spracovanie prebieha priamo v~zariadení na lacnom mikrokontroléri (Edge AI); zariadenie neukladá ani neodosiela surové dáta, iba anonymný počet osôb s~mierou neistoty. Systém pracuje v~dvoch režimoch: v~štandardnom režime poskytuje údaje o~obsadenosti pre riadenie budov (HVAC, osvetlenie) a~pre zobrazovanie vyťaženosti služieb (fitness centrá, knižnice, gastro prevádzky); v~havarijnom režime, napájanom zo záložnej batérie, sa zameria na detekciu aj nehybných osôb v~zadymených priestoroch pre potreby Hasičského a~záchranného zboru. Výstupom projektu bude funkčný vzor na úrovni TRL~6, otvorený anotovaný multimodálny dataset a~softvérový balík pre nasadenie modelov na mikrokontroléroch. Merateľným cieľom je odhad počtu osôb s~chybou najviac $\pm 1$ osoba v~aspoň 90\,\% meraní v~miestnostiach do 15 osôb.
+}}
+
+% =====================================================================
+\cast{VV-A2 -- Údaje o~zúčastnených organizáciách}
+
+\podcast{Žiadateľ}
+\begin{tabularx}{\textwidth}{|p{0.6cm}|p{4.6cm}|L|}
+\hline
+01 & Názov organizácie & Slovenská technická univerzita v~Bratislave \\ \hline
+   & Pracovisko & Fakulta informatiky a~informačných technológií \\ \hline
+02 & Skratka & STU (FIIT STU) \\ \hline
+03 & Adresa & Vazovova 5, 812~43 Bratislava; pracovisko: Ilkovičova~2, 842~16 Bratislava \\ \hline
+04 & IČO & 00397687 \\ \hline
+05 & Rezort & Ministerstvo školstva, výskumu, vývoja a~mládeže SR \\ \hline
+06 & Forma hospodárenia & verejná vysoká škola \\ \hline
+07 & Kontaktná osoba & Oliver Pribula, tel.: \doplnit{telefón}, e-mail: \doplnit{e-mail} \\ \hline
+08 & Štatutárny zástupca I & \doplnit{meno, funkcia} \\ \hline
+09 & Štatutárny zástupca II & \doplnit{meno, funkcia} \\ \hline
+\end{tabularx}
+
+\podcast{Spoluriešiteľská organizácia}
+Projekt nemá spoluriešiteľskú organizáciu. Aplikačná prax (Hasičský a~záchranný zbor, prevádzkovatelia komerčných priestorov) sa zapojí ako potenciálny užívateľ výsledkov pri pilotnom testovaní (pozri VV-B04).
+
+% =====================================================================
+\cast{VV-A3 -- Zoznam riešiteľov}
+
+\podcast{01 Zamestnanci priamo sa podieľajúci na riešení}
+{\small
+\begin{tabularx}{\textwidth}{|L|p{1.4cm}|p{3.6cm}|p{1.8cm}|R{1.3cm}|R{2.4cm}|}
+\hline
+\rowcolor{hlavicka} \textbf{Meno a~priezvisko} & \textbf{Tituly} & \textbf{Pozícia v~projekte} & \textbf{Dátum nar.} & \textbf{h/rok} & \textbf{h spolu (3 roky)} \\ \hline
+Oliver Pribula & -- & zodpovedný riešiteľ & \doplnit{--} & 800 & 2\,400 \\ \hline
+Lukáš Poláček & -- & výskumník -- RF a~senzorika & \doplnit{--} & 800 & 2\,400 \\ \hline
+Martin Pivko & -- & výskumník -- vstavané systémy & \doplnit{--} & 800 & 2\,400 \\ \hline
+Daniil Romashov & -- & výskumník -- strojové učenie & \doplnit{--} & 800 & 2\,400 \\ \hline
+\end{tabularx}}
+
+\podcast{02 Ostatní zamestnanci}
+Celkový počet ostatných osôb: 0; celková kapacita: 0 h.
+
+\podcast{03 Spolu}
+Celkový počet riešiteľov: 4; celková kapacita: 9\,600 h (3\,200 h ročne).
+
+% =====================================================================
+\cast{VV-A4 -- Zodpovedný riešiteľ}
+
+\begin{tabularx}{\textwidth}{|p{0.6cm}|p{6cm}|L|}
+\hline
+01 & Meno a~priezvisko & Oliver Pribula \\ \hline
+02 & Pohlavie & muž \\ \hline
+03 & Telefón & \doplnit{telefón} \\ \hline
+04 & E-mail & \doplnit{e-mail} \\ \hline
+05 & Mladý výskumník (do 35 rokov) & áno \\ \hline
+06 & Identifikátor vo vedeckej databáze & ORCID: \doplnit{ak existuje} \\ \hline
+07 & Projekty za posledných 5 rokov & žiadne (počet: 0) \\ \hline
+08 & Expertízy, konzultácie a~iné výstupy s~priamym využitím v~praxi za posledných 5 rokov & žiadne (počet: 0) \\ \hline
+09 & Chránené aplikačné výstupy (patent, úžitkový vzor) s~úrovňou TRL & žiadne (počet: 0) \\ \hline
+\end{tabularx}
+
+\medskip
+\textbf{Čestné vyhlásenie zodpovedného riešiteľa}\\
+Čestne vyhlasujem, že všetky údaje o~mojej osobe a~v~mojom životopise uvedené v~tejto žiadosti sú pravdivé, a~že pri riešení projektu budem dodržiavať etické princípy výskumu v~zmysle európskej a~národnej legislatívy.
+
+\medskip
+\begin{tabular}{@{}p{5cm}p{5cm}p{5cm}@{}}
+Miesto: Bratislava & Dátum: \doplnit{dátum} & Podpis: \rule{3.5cm}{0.4pt}
+\end{tabular}
+
+\newpage
+% =====================================================================
+\cast{VV-B -- Ciele, zámery a~výstupy projektu}
+
+\podcast{01 Kľúčové slová}
+\textbf{SK:} nevizuálne snímanie, odhad obsadenosti, ochrana súkromia, Wi-Fi CSI, mmWave radar, termálne pole, multimodálna fúzia, Edge AI, krízové situácie.\\
+\textbf{EN:} non-visual sensing, occupancy estimation, privacy-preserving sensing, Wi-Fi CSI, mmWave radar, thermal array sensor, multimodal sensor fusion, Edge AI, emergency response.
+
+\podcast{02 Ciele projektu}
+\textbf{Hlavný cieľ:} vyvinúť a~v~pilotných podmienkach overiť autonómny senzorický modul, ktorý bez kamier a~bez spolupráce osôb odhaduje počet osôb v~uzavretej miestnosti, z~modulu odchádza iba anonymný počet a~zariadenie zostáva funkčné aj v~tme, v~dyme a~pri výpadku elektrickej siete.
+
+\begin{enumerate}[label=\textbf{C\arabic*:},leftmargin=*,itemsep=1pt]
+\item Analyzovať nevizuálne modality (Wi-Fi CSI, mmWave radar, termálne pole, akustické snímanie, CO\textsubscript{2}) z~hľadiska presnosti, ceny, ochrany súkromia a~odolnosti v~dyme; výsledkom je metodika výberu senzorov.
+\item Navrhnúť adaptívnu fúziu modalít, ktorá dosiahne odhad počtu osôb s~chybou najviac $\pm 1$ osoba v~$\geq 90$\,\% meraní a~strednú absolútnu chybu (MAE) $\leq 0{,}5$ osoby v~miestnostiach do 15 osôb.
+\item Implementovať inferenčný reťazec na mikrokontroléri s~pamäťou SRAM $\leq 512$~kB s~latenciou $\leq 1$~s a~s~príkonom $\leq 3$~W.
+\item Navrhnúť havarijný režim, ktorý v~zadymenej miestnosti zistí prítomnosť aj nehybnej osoby do 30~s s~úspešnosťou $\geq 95$\,\% a~vydrží na záložnej batérii aspoň 2~hodiny.
+\item Zabezpečiť adaptáciu na novú miestnosť: kalibrácia do 15 minút bez ručného označovania dát s~poklesom presnosti najviac o~5 percentuálnych bodov.
+\item Overiť riešenie v~pilotnej prevádzke v~2 prostrediach (komerčný priestor, cvičný objekt hasičov) na úrovni TRL~6.
+\end{enumerate}
+
+\podcast{03 Úroveň TRL}
+Východisková úroveň: TRL~2 (technologický koncept: jednotlivé modality sú v~literatúre overené samostatne, ich adaptívna fúzia na mikrokontroléri nie). Cieľová úroveň: TRL~6 (prototyp overený v~relevantnom prostredí).
+
+\begin{tabularx}{\textwidth}{|p{6.2cm}|p{1.2cm}|L|}
+\hline
+\rowcolor{hlavicka} \textbf{Výstup} & \textbf{TRL} & \textbf{Opis} \\ \hline
+Laboratórny senzorický uzol NOISE-HW-v1 & 4 & modulárna doska s~mikrokontrolérom, radarom, termálnym poľom a~Wi-Fi CSI \\ \hline
+Anotovaný multimodálny dataset & -- & synchronizované záznamy Wi-Fi CSI, radarových a~termálnych dát (prípadne aj akustických) s~počtom osôb, vrátane scenárov s~dymom \\ \hline
+Fúzny algoritmus a~softvérový balík pre MCU & 5 & kvantizované modely a~adaptívne váhovanie modalít \\ \hline
+Funkčný vzor NOISE (dvojrežimový modul) & 6 & nástenný modul s~PoE a~záložnou batériou overený v~pilotnej prevádzke \\ \hline
+\end{tabularx}
+
+\podcast{04 Využitie výsledkov v~praxi}
+\textbf{Žiadateľ ako užívateľ:} FIIT STU využije modul na meranie obsadenosti učební a~študovní a~dataset vo výučbe a~ďalšom výskume.\\
+\textbf{Iný užívateľ:} prevádzkovatelia komerčných priestorov (fitness centrá, knižnice, coworkingy, gastro prevádzky) na zobrazovanie vyťaženosti a~správcovia budov na riadenie HVAC; Hasičský a~záchranný zbor SR ako užívateľ havarijného režimu.\\
+\textbf{Názov inej organizácie:} \doplnit{doplniť po dohode s~konkrétnym partnerom; v~predbežnej verzii ide o~potenciálnych užívateľov}
+
+\podcast{05 Prehľad plánovaných výstupov podľa etáp}
+\begin{tabularx}{\textwidth}{|p{1.4cm}|p{2.2cm}|L|}
+\hline
+\rowcolor{hlavicka} \textbf{Etapa} & \textbf{Obdobie} & \textbf{Výstupy (verejne dostupné)} \\ \hline
+1 & M1 -- M8 & analýza modalít (technická správa), laboratórny uzol NOISE-HW-v1, testovacie pracovisko \\ \hline
+2 & M9 -- M20 & anotovaný dataset (M16), fúzny algoritmus, 1 konferenčný príspevok \\ \hline
+3 & M21 -- M30 & softvérový balík pre MCU (otvorený kód), 1 časopisecký článok \\ \hline
+4 & M31 -- M36 & funkčný vzor TRL~6, správa z~pilotného overenia, 1--2 časopisecké články \\ \hline
+\end{tabularx}
+
+\newpage
+% =====================================================================
+\cast{VV-C -- Rozpočet projektu (EUR)}
+
+\podcast{Žiadateľ: STU v~Bratislave, FIIT -- bežné výdavky}
+{\small
+\begin{tabularx}{\textwidth}{|p{0.6cm}|L|R{1.9cm}|R{1.9cm}|R{1.9cm}|R{2cm}|}
+\hline
+\rowcolor{hlavicka} & \textbf{Položka} & \textbf{1. rok} & \textbf{2. rok} & \textbf{3. rok} & \textbf{Spolu} \\ \hline
+01 & \textbf{Priame bežné výdavky} & \textbf{68\,172} & \textbf{66\,876} & \textbf{68\,376} & \textbf{203\,424} \\ \hline
+02 & Mzdy a~iné osobné náklady & 36\,000 & 38\,000 & 38\,000 & 112\,000 \\ \hline
+03 & Odvody do poisťovní & 12\,672 & 13\,376 & 13\,376 & 39\,424 \\ \hline
+04 & Cestovné náhrady & 2\,000 & 3\,500 & 4\,500 & 10\,000 \\ \hline
+05 & Materiál & 14\,000 & 6\,000 & 4\,000 & 24\,000 \\ \hline
+06 & Služby & 3\,000 & 5\,000 & 7\,000 & 15\,000 \\ \hline
+07 & Energie, voda, komunikácie & 0 & 0 & 0 & 0 \\ \hline
+08 & Náklady na popularizáciu & 500 & 1\,000 & 1\,500 & 3\,000 \\ \hline
+09 & Nepriame bežné výdavky (20\,\% z~priamych) & 13\,634 & 13\,375 & 13\,675 & 40\,684 \\ \hline
+10 & \textbf{Bežné výdavky spolu} & \textbf{81\,806} & \textbf{80\,251} & \textbf{82\,051} & \textbf{244\,108} \\ \hline
+\end{tabularx}}
+
+\podcast{Zdroje financovania}
+{\small
+\begin{tabularx}{\textwidth}{|L|R{1.9cm}|R{1.9cm}|R{1.9cm}|R{2cm}|}
+\hline
+\rowcolor{hlavicka} \textbf{Zdroj} & \textbf{1. rok} & \textbf{2. rok} & \textbf{3. rok} & \textbf{Spolu} \\ \hline
+Náklady z~APVV spolu & 81\,806 & 80\,251 & 82\,051 & 244\,108 \\ \hline
+Spolufinancovanie -- štátne zdroje mimo APVV & 0 & 0 & 0 & 0 \\ \hline
+Spolufinancovanie -- zahraničné zdroje & 0 & 0 & 0 & 0 \\ \hline
+Spolufinancovanie -- súkromné zdroje & 0 & 0 & 0 & 0 \\ \hline
+\textbf{Celkové náklady} & \textbf{81\,806} & \textbf{80\,251} & \textbf{82\,051} & \textbf{244\,108} \\ \hline
+\end{tabularx}}
+
+\podcast{Zdôvodnenie položiek hradených z~APVV}
+\begin{description}[leftmargin=0pt,itemsep=1pt,font=\normalfont\bfseries]
+\item[02 Mzdy:] 4 riešitelia, spolu 3\,200 h ročne; mzdy zodpovedajú úväzkom doktorandov a~mladých výskumníkov na FIIT STU.
+\item[03 Odvody:] 35,2\,\% zo mzdových nákladov.
+\item[04 Cestovné:] 2 domáce pilotné výjazdy ročne (cvičný objekt HaZZ, komerčný partner), od 2. roka aktívna účasť na medzinárodných konferenciách (napr. IEEE DCOSS, ACM BuildSys).
+\item[05 Materiál:] radarové moduly 60~GHz, mikrokontroléry ESP32-S3, termálne polia, Wi-Fi prístupové body s~podporou CSI, výroba dosiek plošných spojov a~krytov, LiFePO4 batérie, meracia technika; v~1. roku sa nakupuje väčšina zariadení na 10 uzlov.
+\item[06 Služby:] výroba DPS a~3D tlač krytov, prenájom dymovej komory na testovanie, poplatky za publikovanie v~režime otvoreného prístupu.
+\item[08 Popularizácia:] webová stránka projektu, ukážky na Dni otvorených dverí a~Noci výskumníkov.
+\item[09 Nepriame:] réžia pracoviska (priestory, energie, správa IT).
+\end{description}
+
+% =====================================================================
+\cast{VV-D -- Harmonogram riešenia projektu}
+
+\begin{tabularx}{\textwidth}{|p{1.2cm}|p{2.2cm}|p{2.2cm}|L|}
+\hline
+\rowcolor{hlavicka} \textbf{Etapa} & \textbf{Začiatok} & \textbf{Koniec} & \textbf{Názov etapy} \\ \hline
+1 & 01.07.2027 & 29.02.2028 & Analýza požiadaviek a~modalít, hardvérový návrh a~testovacie pracovisko (WP1) \\ \hline
+2 & 01.03.2028 & 28.02.2029 & Zber dát, spracovanie signálov a~vývoj fúznych algoritmov (WP2) \\ \hline
+3 & 01.03.2029 & 31.12.2029 & Optimalizácia Edge AI, implementácia na mikrokontrolér a~havarijný režim (WP3) \\ \hline
+4 & 01.01.2030 & 30.06.2030 & Pilotné overenie v~reálnych podmienkach a~šírenie výsledkov (WP4) \\ \hline
+\end{tabularx}
+
+\filbreak
+\podcast{Zoznam prístrojov a~zariadení}
+\begin{tabularx}{\textwidth}{|p{5cm}|L|}
+\hline
+\rowcolor{hlavicka} \textbf{Názov} & \textbf{Opis} \\ \hline
+Vývojové sady mmWave radaru 60~GHz & FMCW radar na snímanie pohybu a~mikropohybov (dýchanie) \\ \hline
+Mikrokontroléry ESP32-S3 & zber Wi-Fi CSI a~inferencia modelov na hrane \\ \hline
+Termálne polia 8$\times$8 a~32$\times$24 & nízkorozlíšené IR snímanie tepelných stôp osôb \\ \hline
+Laboratórny zdroj, osciloskop & oživovanie a~meranie spotreby uzlov (existujúce vybavenie FIIT) \\ \hline
+\end{tabularx}
+
+\newpage
+% =====================================================================
+\cast{VV-E -- Čestné vyhlásenia}
+
+\podcast{Čestné vyhlásenie štatutárneho zástupcu žiadateľa}
+Ako štatutárny zástupca žiadateľa čestne vyhlasujem, že:
+\begin{enumerate}[label=\zaskrt,leftmargin=*,itemsep=0pt]
+\item žiadateľ je oprávnený vykonávať výskum a~vývoj;
+\item všetky údaje uvedené v~žiadosti a~jej prílohách sú pravdivé a~úplné;
+\item žiadateľ zabezpečí spolufinancovanie projektu v~uvedenom rozsahu (v~projekte 0 EUR);
+\item na riešenie rovnakého obsahu projektu nežiada ani nečerpá prostriedky z~iných zdrojov (zákaz dvojitého financovania);
+\item poskytnutím prostriedkov nevznikne nepriama štátna pomoc;
+\item žiadateľ nemá daňové nedoplatky ani nedoplatky na poistnom na sociálne a~zdravotné poistenie;
+\item voči žiadateľovi nie je vedené konkurzné ani reštrukturalizačné konanie a~nie je v~likvidácii;
+\item žiadateľ neporušil zákaz nelegálnej práce a~nelegálneho zamestnávania;
+\item žiadateľ má vysporiadané finančné vzťahy so štátnym rozpočtom;
+\item žiadateľ poskytne súčinnosť pri kontrole a~predloží požadované doklady;
+\item žiadateľ zverejní informácie o~výsledkoch projektu a~o~využívanej výskumnej infraštruktúre v~zmysle platných predpisov;
+\item žiadateľ súhlasí so zverejnením rozhodnutia o~poskytnutí prostriedkov agentúrou;
+\item žiadateľ bude výsledky projektu popularizovať;
+\item na obsah projektu nie sú poskytované prostriedky z~iného národného programu.
+\end{enumerate}
+
+\medskip
+\begin{tabularx}{\textwidth}{|p{5cm}|L|}
+\hline
+Názov žiadateľa & Slovenská technická univerzita v~Bratislave \\ \hline
+Štatutárny zástupca & \doplnit{meno a~funkcia} \\ \hline
+V~zastúpení & \doplnit{ak relevantné} \\ \hline
+Miesto a~dátum & Bratislava, \doplnit{dátum} \\ \hline
+Podpis & \\[18pt] \hline
+\end{tabularx}
+
+\podcast{Čestné vyhlásenie štatutárneho zástupcu spoluriešiteľskej organizácie}
+Nevypĺňa sa -- projekt nemá spoluriešiteľskú organizáciu.
+
+\end{document}
